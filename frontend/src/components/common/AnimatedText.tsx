@@ -97,17 +97,10 @@ export const AnimatedShimmerText: React.FC<AnimatedShimmerTextProps> = ({
   return (
     <span className={`relative inline-block overflow-hidden ${className}`}>
       <span className="relative z-10">{children}</span>
-      <motion.span
-        initial={{ x: '-100%' }}
-        animate={{ x: '200%' }}
-        transition={{
-          repeat: Infinity,
-          duration: 3,
-          ease: 'easeInOut',
-          repeatDelay: 1.5
-        }}
+      <span
         aria-hidden="true"
-        className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-r from-transparent via-white/40 dark:via-cyan-400/30 to-transparent skew-x-[-20deg]"
+        className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-r from-transparent via-white/30 dark:via-cyan-400/20 to-transparent -skew-x-12 animate-[shimmer_3.5s_infinite]"
+        style={{ transform: 'translateZ(0)' }}
       />
     </span>
   );

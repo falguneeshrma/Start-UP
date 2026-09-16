@@ -249,7 +249,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
           </div>
 
           {/* Multi-step Form Container */}
-          <div className="bg-white dark:bg-zinc-950/35 dark:backdrop-blur-2xl rounded-2xl sm:rounded-[24px] shadow-sm border border-zinc-200 dark:border-white/10 overflow-hidden hover-lift transition-all max-w-3xl mx-auto">
+          <div className="bg-white dark:bg-[#080d1a] rounded-2xl sm:rounded-[24px] shadow-sm border border-zinc-200 dark:border-white/10 overflow-hidden hover-lift transition-all max-w-3xl mx-auto">
             {/* Progress Bar Header */}
             <div className="p-4 sm:p-8 pb-4 sm:pb-5 bg-white dark:bg-white/5 border-b border-zinc-200 dark:border-white/10">
               <div className="flex flex-wrap justify-between items-center gap-2 mb-2.5 text-xs font-mono font-medium text-zinc-600 dark:text-zinc-400">
@@ -352,7 +352,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
                         value={projectTitle}
                         onChange={(e) => setProjectTitle(e.target.value)}
                         placeholder="e.g. AI Vision Segmentation Pipeline"
-                        className="w-full h-12 rounded-xl bg-white dark:bg-zinc-950/35 dark:backdrop-blur-md border border-zinc-300 dark:border-white/10 px-4 text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:border-zinc-900 dark:focus:border-white/30 focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-white/10 transition-all"
+                        className="w-full h-12 rounded-xl bg-white dark:bg-[#0c1322] border border-zinc-300 dark:border-white/10 px-4 text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:border-zinc-900 dark:focus:border-white/30 focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-white/10 transition-all"
                       />
                     </div>
 
@@ -365,7 +365,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
                           <select
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
-                            className="w-full h-12 rounded-xl bg-white dark:bg-zinc-950/35 dark:backdrop-blur-md border border-zinc-300 dark:border-white/10 px-4 text-sm text-zinc-900 dark:text-zinc-100 appearance-none focus:outline-none focus:border-zinc-900 dark:focus:border-white/30 focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-white/10 transition-all cursor-pointer"
+                            className="w-full h-12 rounded-xl bg-white dark:bg-[#0c1322] border border-zinc-300 dark:border-white/10 px-4 text-sm text-zinc-900 dark:text-zinc-100 appearance-none focus:outline-none focus:border-zinc-900 dark:focus:border-white/30 focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-white/10 transition-all cursor-pointer"
                           >
                             <option value="engineering">Engineering projects</option>
                             <option value="pharmacy">Pharmacy thesis &amp; projects</option>
@@ -385,7 +385,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
                           value={techPreference}
                           onChange={(e) => setTechPreference(e.target.value)}
                           placeholder="e.g. React, Node.js, PyTorch, AWS"
-                          className="w-full h-12 rounded-xl bg-white dark:bg-zinc-950/35 dark:backdrop-blur-md border border-zinc-300 dark:border-white/10 px-4 text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:border-zinc-900 dark:focus:border-white/30 focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-white/10 transition-all"
+                          className="w-full h-12 rounded-xl bg-white dark:bg-[#0c1322] border border-zinc-300 dark:border-white/10 px-4 text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:border-zinc-900 dark:focus:border-white/30 focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-white/10 transition-all"
                         />
                       </div>
                     </div>
@@ -397,7 +397,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         placeholder="Describe the core objective, expected APIs, and deliverables..."
-                        className="w-full rounded-xl bg-white dark:bg-zinc-950/35 dark:backdrop-blur-md border border-zinc-300 dark:border-white/10 p-4 text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:border-zinc-900 dark:focus:border-white/30 focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-white/10 transition-all resize-none"
+                        className="w-full rounded-xl bg-white dark:bg-[#0c1322] border border-zinc-300 dark:border-white/10 p-4 text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:border-zinc-900 dark:focus:border-white/30 focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-white/10 transition-all resize-none"
                       />
                     </div>
                   </div>
@@ -421,7 +421,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
                           value={university}
                           onChange={(e) => setUniversity(e.target.value)}
                           placeholder="e.g. VJTI Mumbai / IIT Bombay"
-                          className="w-full h-12 rounded-xl bg-white dark:bg-zinc-950/35 dark:backdrop-blur-md border border-zinc-300 dark:border-white/10 px-4 text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:border-zinc-900 dark:focus:border-white/30 focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-white/10 transition-all"
+                          className="w-full h-12 rounded-xl bg-white dark:bg-[#0c1322] border border-zinc-300 dark:border-white/10 px-4 text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:border-zinc-900 dark:focus:border-white/30 focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-white/10 transition-all"
                         />
                       </div>
 
@@ -431,7 +431,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
                           <select
                             value={semester}
                             onChange={(e) => setSemester(e.target.value)}
-                            className="w-full h-12 rounded-xl bg-white dark:bg-zinc-950/35 dark:backdrop-blur-md border border-zinc-300 dark:border-white/10 px-4 text-sm text-zinc-900 dark:text-zinc-100 appearance-none focus:outline-none focus:border-zinc-900 dark:focus:border-white/30 focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-white/10 transition-all cursor-pointer"
+                            className="w-full h-12 rounded-xl bg-white dark:bg-[#0c1322] border border-zinc-300 dark:border-white/10 px-4 text-sm text-zinc-900 dark:text-zinc-100 appearance-none focus:outline-none focus:border-zinc-900 dark:focus:border-white/30 focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-white/10 transition-all cursor-pointer"
                           >
                             <option value="senior">Year 4 (Senior Project)</option>
                             <option value="grad">Graduate / Masters</option>
@@ -477,7 +477,7 @@ export const IntakeWizard: React.FC<IntakeWizardProps> = ({
                         type="date"
                         value={deadline}
                         onChange={(e) => setDeadline(e.target.value)}
-                        className="w-full h-12 rounded-xl bg-white dark:bg-zinc-950/35 dark:backdrop-blur-md border border-zinc-300 dark:border-white/10 px-4 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-zinc-900 dark:focus:border-white/30 focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-white/10 transition-all cursor-pointer"
+                        className="w-full h-12 rounded-xl bg-white dark:bg-[#0c1322] border border-zinc-300 dark:border-white/10 px-4 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-zinc-900 dark:focus:border-white/30 focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-white/10 transition-all cursor-pointer"
                       />
                     </div>
                   </div>

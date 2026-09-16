@@ -332,7 +332,7 @@ export const BrowseProjects: React.FC<BrowseProjectsProps> = ({
       <div className="max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8">
         
         {/* Mobile Filter Bar & Quick Toggles */}
-        <div className="md:hidden mb-4 flex items-center justify-between gap-2 bg-white/95 dark:bg-zinc-950/40 dark:backdrop-blur-xl p-3 rounded-2xl border border-gray-200 dark:border-white/10 shadow-sm">
+        <div className="md:hidden mb-4 flex items-center justify-between gap-2 bg-white dark:bg-[#080d1a] p-3 rounded-2xl border border-gray-200 dark:border-white/10 shadow-sm">
           <button
             onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
             className={`flex items-center gap-2 px-3.5 py-2 border rounded-xl text-xs font-bold transition-all ${
@@ -365,7 +365,7 @@ export const BrowseProjects: React.FC<BrowseProjectsProps> = ({
         <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
           
           {/* Sidebar Filters (Desktop & Collapsible Mobile) */}
-          <aside className={`${isMobileFilterOpen ? 'block' : 'hidden'} md:block w-full md:w-72 flex-shrink-0 bg-white dark:bg-zinc-950/35 dark:backdrop-blur-2xl border border-gray-200 dark:border-white/10 rounded-2xl p-5 sm:p-6 md:sticky md:top-28 shadow-sm`}>
+          <aside className={`${isMobileFilterOpen ? 'block' : 'hidden'} md:block w-full md:w-72 flex-shrink-0 bg-white dark:bg-[#080d1a] border border-gray-200 dark:border-white/10 rounded-2xl p-5 sm:p-6 md:sticky md:top-28 shadow-sm`}>
             <div className="flex items-center justify-between mb-5 sm:mb-6">
               <h2 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-white font-headline">Filters</h2>
               {hasActiveFilters && (
@@ -543,7 +543,7 @@ export const BrowseProjects: React.FC<BrowseProjectsProps> = ({
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search projects, subsections (AIML, Web, Cloud, IoT, Pharmacy, Research)..."
-                  className="w-full h-14 pl-12 pr-10 rounded-xl border border-gray-200 dark:border-white/10 focus:border-zinc-900 dark:focus:border-white/30 focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-white/10 shadow-sm text-base text-zinc-900 dark:text-zinc-100 bg-white dark:bg-zinc-950/35 dark:backdrop-blur-xl placeholder:text-zinc-400 dark:placeholder:text-zinc-500 transition-all"
+                  className="w-full h-14 pl-12 pr-10 rounded-xl border border-gray-200 dark:border-white/10 focus:border-zinc-900 dark:focus:border-white/30 focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-white/10 shadow-sm text-base text-zinc-900 dark:text-zinc-100 bg-white dark:bg-[#080d1a] placeholder:text-zinc-400 dark:placeholder:text-zinc-500 transition-all"
                 />
                 {searchQuery && (
                   <button
@@ -761,7 +761,7 @@ export const BrowseProjects: React.FC<BrowseProjectsProps> = ({
           onClick={handleCloseProjectModal}
         >
           <div 
-            className="bg-white dark:bg-zinc-950/80 dark:backdrop-blur-2xl rounded-2xl sm:rounded-3xl w-[calc(100vw-2rem)] max-w-2xl max-h-[90dvh] overflow-y-auto smooth-touch-scroll shadow-2xl border border-zinc-200 dark:border-white/15 p-4 sm:p-8 relative text-zinc-900 dark:text-zinc-100 animate-scale-in"
+            className="bg-white dark:bg-[#080d1a] rounded-2xl sm:rounded-3xl w-[calc(100vw-2rem)] max-w-2xl max-h-[90dvh] overflow-y-auto smooth-touch-scroll shadow-2xl border border-zinc-200 dark:border-white/15 p-4 sm:p-8 relative text-zinc-900 dark:text-zinc-100 animate-scale-in"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}

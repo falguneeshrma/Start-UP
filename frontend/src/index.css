@@ -97,14 +97,13 @@ html.dark body {
   border-radius: 1rem;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateZ(0);
 }
 
 .dark .pb-card {
-  background: rgba(10, 16, 30, 0.72);
+  background: #090f20;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 .pb-card-hover:hover {
@@ -128,10 +127,9 @@ html.dark body {
 }
 
 .dark .pb-input {
-  background: rgba(10, 16, 30, 0.65);
+  background: #0d1527;
   border: 1px solid rgba(255, 255, 255, 0.12);
   color: #f4f4f5;
-  backdrop-filter: blur(8px);
 }
 
 .pb-input::placeholder {
