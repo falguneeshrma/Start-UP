@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Award, ArrowRight, ShieldCheck, FolderKanban, Send, FileText } from 'lucide-react';
 import type { NavTab } from '../../components/common/Header';
 import { useConfig } from '../../context/ConfigContext';
+import { AnimatedHeading, AnimatedBadge } from '../../components/common/AnimatedText';
 
 interface BestSellingProjectsProps {
   onNavigate: (tab: NavTab) => void;
@@ -27,16 +28,19 @@ export const BestSellingProjects: React.FC<BestSellingProjectsProps> = ({
         className="w-full max-w-3xl space-y-8 text-center"
       >
         {/* Header Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/70 dark:bg-zinc-900/60 border border-slate-200/80 dark:border-white/10 text-slate-800 dark:text-zinc-200 text-xs font-mono font-semibold backdrop-blur-md shadow-xs">
-          <Award className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
-          <span>Top-Ranked Academic Blueprints</span>
-        </div>
+        <AnimatedBadge 
+          icon={<Award className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />} 
+          text="Top-Ranked Academic Blueprints" 
+        />
 
         {/* Title & Subtitle */}
         <div className="space-y-3">
-          <h1 className="font-headline font-black text-3xl sm:text-5xl text-slate-900 dark:text-white tracking-tight">
-            Best Selling Projects
-          </h1>
+          <AnimatedHeading 
+            text="Best Selling Projects" 
+            highlightWords={["Best", "Selling"]}
+            as="h1"
+            className="font-headline font-black text-3xl sm:text-5xl text-slate-900 dark:text-white tracking-tight" 
+          />
           <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-400 max-w-xl mx-auto leading-relaxed">
             Curated, highly rated project architectures with verified submission track records across top universities.
           </p>

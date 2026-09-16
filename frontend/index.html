@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en" class="light">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
     <title>Project Wallah - Turn your ideas into reality</title>
     <meta name="description" content="AI & Engineering Service Marketplace with Automated 15-Step Delivery Protocol and Enterprise Quality Assurance" />
-    <meta name="theme-color" content="#050505" />
+    <meta name="theme-color" content="#ffffff" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,9 +14,15 @@
       (function() {
         try {
           var key = 'projectbridge_theme';
-          var stored = localStorage.getItem(key);
+          var migratedKey = 'projectbridge_theme_migrated';
+          // Clean up old forced 'light' mode from previous session so device auto-detection works
+          if (!localStorage.getItem(migratedKey)) {
+            localStorage.setItem(migratedKey, '1');
+            localStorage.setItem(key, 'system');
+          }
+          var stored = localStorage.getItem(key) || 'system';
           var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-          var isDark = stored === 'dark' || (!stored && prefersDark) || (stored === 'system' && prefersDark);
+          var isDark = stored === 'dark' || (stored === 'system' && prefersDark);
           var root = document.documentElement;
           if (isDark) {
             root.classList.add('dark');
@@ -27,11 +33,15 @@
             root.classList.add('light');
             root.style.colorScheme = 'light';
           }
+          var metaThemeColor = document.querySelector('meta[name="theme-color"]');
+          if (metaThemeColor) {
+            metaThemeColor.setAttribute('content', isDark ? '#040814' : '#ffffff');
+          }
         } catch (e) {}
       })();
     </script>
   </head>
-  <body class="bg-background text-zinc-900 dark:text-zinc-100 font-body antialiased min-h-screen selection:bg-primary selection:text-white">
+  <body class="bg-[#f8f8fa] dark:bg-[#040814] text-zinc-900 dark:text-zinc-100 font-body antialiased min-h-screen selection:bg-zinc-900 dark:selection:bg-zinc-100 selection:text-white dark:selection:text-zinc-900">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

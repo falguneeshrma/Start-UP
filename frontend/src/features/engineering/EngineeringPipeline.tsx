@@ -8,6 +8,7 @@ import {
   Layers
 } from 'lucide-react';
 import { useToast } from '../../components/common/Toast';
+import { AnimatedHeading } from '../../components/common/AnimatedText';
 
 export const EngineeringPipeline: React.FC = () => {
   const { showToast } = useToast();
@@ -57,9 +58,12 @@ export const EngineeringPipeline: React.FC = () => {
           <span className="text-[10px] font-mono uppercase font-bold text-zinc-500">
             Engineering &amp; QA Command Center
           </span>
-          <h1 className="font-headline text-xl sm:text-2xl md:text-3xl font-bold text-zinc-900 mt-0.5">
-            Sprint 2: Architecture &amp; Staging Pipeline
-          </h1>
+          <AnimatedHeading 
+            text="Sprint 2: Architecture & Staging Pipeline" 
+            highlightWords={["Pipeline"]}
+            as="h1"
+            className="!justify-start font-headline text-xl sm:text-2xl md:text-3xl font-bold text-zinc-900 mt-0.5" 
+          />
           <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-mono text-zinc-500 mt-2">
             <span className="flex items-center gap-1.5 font-bold text-zinc-900">
               <GitBranch className="w-3.5 h-3.5 text-zinc-800" /> branch: staging

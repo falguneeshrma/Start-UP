@@ -17,14 +17,16 @@ import {
   Briefcase,
   FileText,
   Palette,
-  Server
+  Server,
+  ExternalLink
 } from 'lucide-react';
 import { formatINR } from '../../utils/gst';
 import { NavTab } from '../../components/common/Header';
 import { useToast } from '../../components/common/Toast';
 import { getProjects } from '../../api/client';
-import { ProjectDetailsModal } from '../../components/common/ProjectDetailsModal';
 import { useHistoryModal } from '../../utils/useHistoryModal';
+import { useCustomProjectForm } from '../../utils/customProject';
+import { AnimatedHeading } from '../../components/common/AnimatedText';
 
 interface BrowseProjectsProps {
   onNavigate: (tab: NavTab) => void;
@@ -124,7 +126,7 @@ export const BrowseProjects: React.FC<BrowseProjectsProps> = ({
   const [minBudget, setMinBudget] = useState<string>('');
   const [maxBudget, setMaxBudget] = useState<string>('');
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
-  const [isProjectDetailsOpen, setIsProjectDetailsOpen] = useState(false);
+  const { openCustomProject } = useCustomProjectForm();
 
   const handleCloseProjectModal = useHistoryModal(
     !!selectedProject,
@@ -521,6 +523,19 @@ export const BrowseProjects: React.FC<BrowseProjectsProps> = ({
             
             {/* Search & Active Filters Header */}
             <div className="mb-6 flex flex-col gap-3">
+              <div className="flex items-center justify-between gap-3 mb-1">
+                <AnimatedHeading 
+                  text="Explore & Get Projects" 
+                  highlightWords={["Projects"]}
+                  as="h1" 
+                  className="!justify-start text-xl sm:text-2xl font-headline font-black text-zinc-900 dark:text-white" 
+                />
+                <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800/80 text-xs font-mono font-bold text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-white/10 shadow-2xs">
+                  <span className="text-cyan-600 dark:text-cyan-400 font-black">{filteredProjects.length}</span>
+                  <span>Projects Available</span>
+                </div>
+              </div>
+
               <div className="relative w-full">
                 <Search className="w-5 h-5 text-zinc-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none z-10" />
                 <input
@@ -638,10 +653,12 @@ export const BrowseProjects: React.FC<BrowseProjectsProps> = ({
                     Reset All Filters
                   </button>
                   <button
-                    onClick={() => setIsProjectDetailsOpen(true)}
-                    className="px-4 py-2 bg-zinc-900 dark:bg-zinc-100 hover:bg-black dark:hover:bg-white text-white dark:text-zinc-900 text-xs font-bold rounded-lg transition-colors active:scale-95 shadow-md cursor-pointer"
+                    onClick={openCustomProject}
+                    aria-label="Request Custom Project (opens Google Form in a new tab)"
+                    className="px-4 py-2 bg-zinc-900 dark:bg-zinc-100 hover:bg-black dark:hover:bg-white text-white dark:text-zinc-900 text-xs font-bold rounded-lg transition-colors active:scale-95 shadow-md cursor-pointer inline-flex items-center gap-1.5 focus:outline-hidden focus:ring-2 focus:ring-zinc-800 dark:focus:ring-cyan-400"
                   >
-                    Enter Project Details
+                    <span>Request Custom Project</span>
+                    <ExternalLink className="w-3 h-3 opacity-70 shrink-0" aria-hidden="true" />
                   </button>
                 </div>
               </div>
@@ -860,12 +877,6 @@ export const BrowseProjects: React.FC<BrowseProjectsProps> = ({
         </div>
       )}
 
-      {/* Enter Project Details Modal */}
-      <ProjectDetailsModal
-        isOpen={isProjectDetailsOpen}
-        onClose={() => setIsProjectDetailsOpen(false)}
-        onNavigate={onNavigate}
-      />
     </div>
   );
 };

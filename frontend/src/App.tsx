@@ -133,9 +133,9 @@ export const AppContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-transparent text-zinc-900 dark:text-zinc-100 flex flex-col font-body selection:bg-zinc-900 selection:text-white dark:selection:bg-zinc-100 dark:selection:text-zinc-900 pb-20 sm:pb-24 md:pb-0 relative transition-colors duration-300">
-      {/* Dynamic Framer Motion Scroll Synced Background */}
-      <ScrollMotionBackground enableInteractiveGlow={true} />
+    <div className="min-h-screen bg-transparent text-zinc-900 dark:text-zinc-100 flex flex-col font-body selection:bg-cyan-500 selection:text-white pb-20 sm:pb-24 md:pb-0 relative transition-colors duration-300">
+      {/* High-Tech Animated Circuit Background */}
+      <ScrollMotionBackground />
 
       {/* Top Project Wallah Navigation Header */}
       <Header 

@@ -387,7 +387,7 @@ export const InstantServiceModal: React.FC<InstantServiceModalProps> = ({
               {/* Field 5: WhatsApp Number (Optional) */}
               <div className="space-y-1.5">
                 <label className="block text-xs font-bold font-headline text-slate-800 dark:text-zinc-200">
-                  Phone / Telegram Number <span className="text-[10px] text-slate-400 font-normal">(for instant delivery updates)</span>
+                  Phone / WhatsApp Number <span className="text-[10px] text-slate-400 font-normal">(for instant delivery updates)</span>
                 </label>
                 <input
                   type="tel"
@@ -437,7 +437,7 @@ export const InstantServiceModal: React.FC<InstantServiceModalProps> = ({
                     className="w-full sm:w-auto px-6 py-2.5 rounded-xl text-xs font-bold text-white dark:text-zinc-950 bg-zinc-900 hover:bg-black dark:bg-white dark:hover:bg-zinc-100 transition-all shadow-md hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                   >
                     <span>
-                      {isAuthenticated ? 'Submit Project Details' : 'Submit & Sign In with Google'}
+                      {isAuthenticated ? 'Submit Request' : 'Submit & Sign In with Google'}
                     </span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
