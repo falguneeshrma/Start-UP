@@ -16,44 +16,49 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const THEME_STORAGE_KEY = 'projectbridge_theme';
 
-const getSystemTheme = (): 'light' | 'dark' => {
-  if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    return 'dark';
-  }
-  return 'light';
-};
-
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const getSystemTheme = (): 'light' | 'dark' => {
+    if (typeof window === 'undefined') return 'dark';
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  };
+
   const [theme, setThemeState] = useState<ThemeMode>(() => {
-    if (typeof window === 'undefined') return 'system';
-    const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) as ThemeMode | null;
-    if (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'system') {
-      return savedTheme;
-    }
-    // Default to automatically aligning with device theme
-    return 'system';
+    try {
+      const migrated = localStorage.getItem('projectbridge_theme_migrated');
+      if (!migrated) {
+        localStorage.setItem('projectbridge_theme_migrated', '1');
+        localStorage.setItem(THEME_STORAGE_KEY, 'system');
+        return 'system';
+      }
+      const stored = localStorage.getItem(THEME_STORAGE_KEY);
+      if (stored === 'light' || stored === 'dark' || stored === 'system') {
+        return stored;
+      }
+    } catch (e) {}
+    return 'system'; // Default to automatic device matching
   });
 
   const [systemTheme, setSystemTheme] = useState<'light' | 'dark'>(getSystemTheme);
 
-  // Real-time listener for device/system dark mode toggle
+  // Real-time listener for device/OS theme preference changes
   useEffect(() => {
     if (typeof window === 'undefined' || !window.matchMedia) return;
+
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     
-    // Update initial system theme state
-    setSystemTheme(mediaQuery.matches ? 'dark' : 'light');
-
-    const handleSystemThemeChange = (e: MediaQueryListEvent) => {
+    const handleChange = (e: MediaQueryListEvent | MediaQueryList) => {
       setSystemTheme(e.matches ? 'dark' : 'light');
     };
 
+    // Initial check
+    setSystemTheme(mediaQuery.matches ? 'dark' : 'light');
+
     if (mediaQuery.addEventListener) {
-      mediaQuery.addEventListener('change', handleSystemThemeChange);
-      return () => mediaQuery.removeEventListener('change', handleSystemThemeChange);
+      mediaQuery.addEventListener('change', handleChange);
+      return () => mediaQuery.removeEventListener('change', handleChange);
     } else if ((mediaQuery as any).addListener) {
-      (mediaQuery as any).addListener(handleSystemThemeChange);
-      return () => (mediaQuery as any).removeListener(handleSystemThemeChange);
+      (mediaQuery as any).addListener(handleChange);
+      return () => (mediaQuery as any).removeListener(handleChange);
     }
   }, []);
 
@@ -63,7 +68,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   useEffect(() => {
     const root = document.documentElement;
-    if (resolvedTheme === 'dark') {
+    if (isDark) {
       root.classList.add('dark');
       root.classList.remove('light');
       root.style.colorScheme = 'dark';
@@ -73,28 +78,30 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       root.style.colorScheme = 'light';
     }
 
-    // Keep browser mobile address bar color aligned with device theme
+    // Dynamic browser address bar / notch tinting
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');
     if (metaThemeColor) {
-      metaThemeColor.setAttribute('content', resolvedTheme === 'dark' ? '#050505' : '#ffffff');
+      metaThemeColor.setAttribute('content', isDark ? '#040814' : '#ffffff');
     }
 
-    localStorage.setItem(THEME_STORAGE_KEY, theme);
-  }, [theme, resolvedTheme]);
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, theme);
+    } catch (e) {}
+  }, [resolvedTheme, theme, isDark]);
 
   const toggleTheme = useCallback(() => {
-    setThemeState(prev => {
+    setThemeState((prev) => {
       if (prev === 'system') {
-        // From auto to the opposite of current system theme
-        return resolvedTheme === 'dark' ? 'light' : 'dark';
-      } else if (prev === 'light') {
-        return 'dark';
-      } else {
-        // Return back to auto device sync
-        return 'system';
+        // Cycle from auto/system to dark (if currently light) or light (if currently dark)
+        return systemTheme === 'dark' ? 'light' : 'dark';
       }
+      if (prev === 'dark') {
+        return 'light';
+      }
+      // From light, cycle back to system (auto device matching)
+      return 'system';
     });
-  }, [resolvedTheme]);
+  }, [systemTheme]);
 
   const setTheme = useCallback((newTheme: ThemeMode) => {
     setThemeState(newTheme);

@@ -57,23 +57,25 @@ export const UserMenu: React.FC<UserMenuProps> = ({ onNavigate }) => {
   }
 
   const roleLabel = isAdmin ? 'Admin' : 'Client';
-  const roleColor = isAdmin ? 'bg-amber-100 text-amber-800 border-amber-200' : 'bg-zinc-100 text-zinc-700 border-zinc-200';
+  const roleColor = isAdmin 
+    ? 'bg-amber-100 text-amber-800 border-amber-200 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-800' 
+    : 'bg-zinc-100 text-zinc-700 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700';
 
   return (
     <div className="relative shrink-0" ref={dropdownRef}>
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="shrink-0 flex items-center gap-1.5 sm:gap-2 p-1 pl-1.5 pr-2.5 sm:pr-3 bg-zinc-100 hover:bg-zinc-200 border border-zinc-200 rounded-full transition-all duration-200 active:scale-95 text-zinc-900 text-xs font-semibold cursor-pointer"
+        className="shrink-0 flex items-center gap-1.5 sm:gap-2 p-1 pl-1.5 pr-2.5 sm:pr-3 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800/80 dark:hover:bg-zinc-700/80 border border-zinc-200 dark:border-zinc-700/80 rounded-full transition-all duration-200 active:scale-95 text-zinc-900 dark:text-zinc-100 text-xs font-semibold cursor-pointer"
       >
         {user.picture ? (
           <img
             src={user.picture}
             alt={user.fullName}
-            className="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover border border-zinc-300 shrink-0"
+            className="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover border border-zinc-300 dark:border-zinc-600 shrink-0"
           />
         ) : (
-          <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-zinc-900 text-white flex items-center justify-center font-bold text-xs shrink-0">
+          <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 flex items-center justify-center font-bold text-xs shrink-0">
             {user.fullName.charAt(0)}
           </div>
         )}
@@ -86,7 +88,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({ onNavigate }) => {
           {roleLabel}
         </span>
 
-        <ChevronDown className={`w-3.5 h-3.5 text-zinc-500 shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400 shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {/* Dropdown Menu */}

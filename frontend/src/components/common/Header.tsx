@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { 
   Search, 
@@ -18,7 +18,8 @@ import {
   ClipboardList, 
   Laptop, 
   ChevronRight,
-  User
+  User,
+  Check
 } from 'lucide-react';
 import { NotificationDropdown } from './NotificationDropdown';
 import { UserMenu } from '../auth/UserMenu';
@@ -41,11 +42,24 @@ export const Header: React.FC<HeaderProps> = ({
   onSearchSubmit
 }) => {
   const [isNotifOpen, setIsNotifOpen] = useState(false);
+  const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
+  const themeMenuRef = useRef<HTMLDivElement>(null);
   const [searchValue, setSearchValue] = useState('');
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isAuthenticated, isAdmin, openAuthModal } = useAuth();
-  const { isDark, isSystem, toggleTheme, setTheme } = useTheme();
+  const { isDark, isSystem, setTheme } = useTheme();
+
+  // Close theme dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (themeMenuRef.current && !themeMenuRef.current.contains(e.target as Node)) {
+        setIsThemeMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // Prevent background scroll when mobile navigation drawer is open
   useEffect(() => {
@@ -105,7 +119,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <>
-      <header className="sticky top-0 z-40 border-b border-black/5 dark:border-white/10 backdrop-blur-xl transition-all duration-300 shadow-sm bg-white/92 dark:bg-zinc-950/40 dark:backdrop-blur-2xl">
+      <header className="sticky top-0 z-40 border-b border-zinc-200/80 dark:border-white/10 backdrop-blur-xl transition-all duration-300 shadow-2xs bg-white/95 dark:bg-zinc-950/90">
         <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-1.5 sm:gap-4">
           {/* Brand Logo & Name */}
           <div className="flex items-center shrink-0">
@@ -117,8 +131,8 @@ export const Header: React.FC<HeaderProps> = ({
                 P
               </div>
               <div>
-                <span className="font-headline font-bold text-sm sm:text-xl lg:text-2xl text-zinc-900 dark:text-white tracking-tight whitespace-nowrap group-hover:text-black dark:group-hover:text-zinc-100 transition-colors">
-                  Project Wallah
+                <span className="font-headline font-bold text-sm sm:text-xl lg:text-2xl text-zinc-900 dark:text-white tracking-tight whitespace-nowrap inline-block transition-transform group-hover:scale-[1.02]">
+                  Project <span className="text-gradient-animated">Wallah</span>
                 </span>
               </div>
             </button>
@@ -132,7 +146,7 @@ export const Header: React.FC<HeaderProps> = ({
               className={`text-xs xl:text-sm font-semibold transition-all duration-200 pb-1 relative cursor-pointer ${
                 activeTab === 'home'
                   ? 'text-zinc-900 dark:text-white font-bold'
-                  : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:translate-y-[-1px]'
+                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:translate-y-[-1px]'
               }`}
             >
               Home
@@ -263,34 +277,92 @@ export const Header: React.FC<HeaderProps> = ({
               />
             </div>
 
-            {/* Removed Download Here Button */}
+            {/* Theme Switcher Dropdown (Auto / Day / Night) */}
+            <div className="relative shrink-0" ref={themeMenuRef}>
+              <button
+                type="button"
+                onClick={() => setIsThemeMenuOpen(!isThemeMenuOpen)}
+                className="p-1.5 sm:p-2 text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800/80 dark:hover:bg-zinc-700/80 rounded-full transition-all active:scale-95 cursor-pointer shrink-0 relative flex items-center justify-center"
+                title={isSystem ? `Theme: Auto (${isDark ? 'Dark / Night' : 'Light / Day'})` : isDark ? 'Theme: Night' : 'Theme: Day'}
+                aria-label="Toggle Theme Menu"
+              >
+                {isSystem ? (
+                  <Laptop className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-600 dark:text-cyan-400" />
+                ) : isDark ? (
+                  <Moon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-400" />
+                ) : (
+                  <Sun className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-500" />
+                )}
+                {isSystem && (
+                  <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-cyan-500 ring-2 ring-white dark:ring-zinc-900" />
+                )}
+              </button>
 
-            {/* Day / Night Theme Shift Toggle Button */}
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className="hidden md:flex p-1.5 sm:p-2 text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-full transition-all duration-300 active:scale-90 relative cursor-pointer shrink-0 shadow-xs"
-              title={
-                isSystem 
-                  ? `Theme: Device Auto (${isDark ? 'Night' : 'Day'}) - Click to switch` 
-                  : isDark 
-                    ? "Theme: Night Mode - Click to switch" 
-                    : "Theme: Day Mode - Click to switch"
-              }
-              aria-label={isDark ? "Switch to Day Mode" : "Switch to Night Mode"}
-            >
-              {isDark ? (
-                <Sun className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5 text-amber-400 hover:rotate-45 transition-transform duration-300" />
-              ) : (
-                <Moon className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5 text-zinc-700 hover:-rotate-12 transition-transform duration-300" />
+              {isThemeMenuOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/15 rounded-2xl shadow-xl z-50 p-1.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150">
+                  <div className="px-2.5 py-1 text-[10px] font-mono uppercase tracking-wider text-zinc-400 dark:text-zinc-500 font-bold border-b border-zinc-100 dark:border-white/10 mb-1">
+                    Theme Preference
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setTheme('system');
+                      setIsThemeMenuOpen(false);
+                    }}
+                    className={`w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
+                      isSystem
+                        ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900'
+                        : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/10'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <Laptop className="w-3.5 h-3.5 text-cyan-500" />
+                      <span>Auto (Device)</span>
+                    </div>
+                    {isSystem && <Check className="w-3.5 h-3.5" />}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setTheme('light');
+                      setIsThemeMenuOpen(false);
+                    }}
+                    className={`w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
+                      !isSystem && !isDark
+                        ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900'
+                        : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/10'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <Sun className="w-3.5 h-3.5 text-amber-500" />
+                      <span>Day (Light)</span>
+                    </div>
+                    {!isSystem && !isDark && <Check className="w-3.5 h-3.5" />}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setTheme('dark');
+                      setIsThemeMenuOpen(false);
+                    }}
+                    className={`w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
+                      !isSystem && isDark
+                        ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900'
+                        : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/10'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <Moon className="w-3.5 h-3.5 text-indigo-400" />
+                      <span>Night (Dark)</span>
+                    </div>
+                    {!isSystem && isDark && <Check className="w-3.5 h-3.5" />}
+                  </button>
+                </div>
               )}
-              {isSystem && (
-                <span 
-                  className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-full ring-2 ring-white dark:ring-zinc-900" 
-                  title="Aligned with device theme" 
-                />
-              )}
-            </button>
+            </div>
 
             {/* Mobile Search Toggle Button */}
             <button

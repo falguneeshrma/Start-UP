@@ -18,19 +18,18 @@ html {
 }
 
 body {
-  background-color: #f8f8fa;
-  color: #18181b;
+  background-color: #f8fafc;
+  color: #09090b;
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
   overflow-x: hidden;
   width: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .dark body,
 html.dark body {
-  background-color: #121620;
+  background-color: #040814;
   color: #f4f4f5;
 }
 
@@ -91,58 +90,56 @@ html.dark body {
   }
 }
 
-/* Card and container styling with sleek glassmorphism */
+/* Card and container styling with clean, crisp borders and subtle elevation */
 .pb-card {
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: #ffffff;
+  border: 1px solid #e4e4e7;
   border-radius: 1rem;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dark .pb-card {
-  background: rgba(15, 18, 28, 0.45);
+  background: rgba(10, 16, 30, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.5);
 }
 
 .pb-card-hover:hover {
-  border-color: rgba(24, 24, 27, 0.25);
-  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(24, 24, 27, 0.08);
-  transform: translateY(-3px);
+  border-color: #d4d4d8;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
 }
 
 .dark .pb-card-hover:hover {
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.15);
+  border-color: rgba(56, 189, 248, 0.35);
+  box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(56, 189, 248, 0.12);
+  transform: translateY(-2px);
 }
 
 .pb-input {
   background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  border: 1px solid #d4d4d8;
   border-radius: 0.75rem;
-  color: #18181b;
+  color: #09090b;
   transition: all 0.2s ease-in-out;
 }
 
 .dark .pb-input {
-  background: rgba(24, 24, 27, 0.5);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(10, 16, 30, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   color: #f4f4f5;
+  backdrop-filter: blur(8px);
 }
 
 .pb-input::placeholder {
-  color: rgba(0, 0, 0, 0.40);
+  color: #71717a;
 }
 
 .dark .pb-input::placeholder {
-  color: rgba(255, 255, 255, 0.40);
+  color: #71717a;
 }
 
 .pb-input:focus {
@@ -297,36 +294,133 @@ select, option {
   transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Ambient Radial Glow Backdrops */
-.ambient-glow-purple {
-  position: absolute;
-  width: 450px;
-  height: 450px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(24, 24, 27, 0.03) 0%, rgba(24, 24, 27, 0) 70%);
-  filter: blur(50px);
-  pointer-events: none;
-  z-index: 0;
+/* 3D Perspective & Transform Utilities */
+.perspective-1000 {
+  perspective: 1000px;
+}
+.perspective-1200 {
+  perspective: 1200px;
+}
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
 }
 
-.ambient-glow-emerald {
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.06) 0%, rgba(16, 185, 129, 0) 70%);
-  filter: blur(50px);
-  pointer-events: none;
-  z-index: 0;
+/* 3D Text Depth Lighting */
+.title-3d-text-light {
+  text-shadow: 
+    0 1px 0 #d4d4d8,
+    0 2px 0 #cbd5e1,
+    0 3px 0 #94a3b8,
+    0 8px 18px rgba(15, 23, 42, 0.12);
 }
 
-.ambient-glow-blue {
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(24, 24, 27, 0.03) 0%, rgba(24, 24, 27, 0) 70%);
-  filter: blur(50px);
-  pointer-events: none;
-  z-index: 0;
+.title-3d-text-dark {
+  text-shadow: 
+    0 1px 0 rgba(56, 189, 248, 0.8),
+    0 2px 0 rgba(14, 165, 233, 0.6),
+    0 3px 0 rgba(2, 132, 199, 0.4),
+    0 0 25px rgba(56, 189, 248, 0.45),
+    0 10px 30px rgba(0, 0, 0, 0.8);
 }
+
+/* ==========================================================================
+   Advanced Text Animation Utilities
+   ========================================================================== */
+
+@keyframes textGradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes textShimmerSweep {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes textPulseGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.35));
+  }
+  50% {
+    filter: drop-shadow(0 0 22px rgba(14, 165, 233, 0.7));
+  }
+}
+
+/* Iridescent animated gradient text for hero and prominent titles */
+.text-gradient-animated {
+  background: linear-gradient(
+    135deg, 
+    #0284c7 0%, 
+    #06b6d4 25%, 
+    #3b82f6 50%, 
+    #6366f1 75%, 
+    #06b6d4 100%
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textGradientShift 6s ease infinite;
+}
+
+.dark .text-gradient-animated {
+  background: linear-gradient(
+    135deg, 
+    #38bdf8 0%, 
+    #67e8f9 25%, 
+    #818cf8 50%, 
+    #a5b4fc 75%, 
+    #38bdf8 100%
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textGradientShift 5s ease infinite;
+}
+
+/* Subtle Shimmer for Badges and Secondary Headers */
+.text-shimmer-badge {
+  background: linear-gradient(
+    90deg, 
+    currentColor 0%, 
+    rgba(6, 182, 212, 0.9) 50%, 
+    currentColor 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShimmerSweep 4s linear infinite;
+}
+
+/* Kinetic Floating Text */
+.text-float-subtle {
+  animation: floatGentle 3.5s ease-in-out infinite;
+}
+
+/* Glowing text highlight */
+.text-glow-cyan {
+  animation: textPulseGlow 3s ease-in-out infinite;
+}
+

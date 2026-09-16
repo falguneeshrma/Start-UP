@@ -33,6 +33,7 @@ import { useToast } from '../../components/common/Toast';
 import { useAuth } from '../../context/AuthContext';
 import { ProjectItem } from '../browse/BrowseProjects';
 import { getProjects, getMilestones } from '../../api/client';
+import { useCustomProjectForm } from '../../utils/customProject';
 
 interface ClientProjectHubProps {
   onNavigate?: (tab: NavTab) => void;
@@ -61,6 +62,7 @@ export const ClientProjectHub: React.FC<ClientProjectHubProps> = ({
 }) => {
   const { showToast } = useToast();
   const { user, logout } = useAuth();
+  const { openCustomProject } = useCustomProjectForm();
 
   const [activeSubTab, setActiveSubTab] = useState<
     'dashboard' | 'requests' | 'purchases' | 'tiers' | 'settings' | 'help'
@@ -725,11 +727,12 @@ export const ClientProjectHub: React.FC<ClientProjectHubProps> = ({
                   </p>
                 </div>
                 <button
-                  onClick={() => onNavigate && onNavigate('submit')}
+                  onClick={openCustomProject}
+                  aria-label="Request Custom Project (opens Google Form in a new tab)"
                   className="text-xs font-bold text-zinc-900 dark:text-zinc-200 hover:text-zinc-700 dark:hover:text-white hover:underline flex items-center gap-1"
                 >
-                  <span>Enter Project Details</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <span>Request Custom Project</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
                 </button>
               </div>
 
@@ -961,7 +964,7 @@ export const ClientProjectHub: React.FC<ClientProjectHubProps> = ({
             <div className="space-y-4">
               {customProjects.length === 0 ? (
                 <div className="bg-white dark:bg-zinc-950/40 dark:backdrop-blur-2xl rounded-2xl p-8 border border-slate-200 dark:border-white/10 shadow-sm text-center">
-                  <p className="text-sm text-gray-400 dark:text-zinc-500 italic">No custom project requests yet. Submit a new scope to get started.</p>
+                  <p className="text-sm text-gray-400 dark:text-zinc-500 italic">No custom project requests yet. Request a custom project to get started.</p>
                 </div>
               ) : customProjects.map((p) => (
                 <div
