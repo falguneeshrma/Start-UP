@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
+import React, { useEffect } from 'react';
+import { motion, useScroll, useTransform, useSpring, useMotionValue, useReducedMotion } from 'framer-motion';
 import { useTheme } from '../../context/ThemeContext';
 
 interface ScrollMotionBackgroundProps {
@@ -13,31 +13,43 @@ export const ScrollMotionBackground: React.FC<ScrollMotionBackgroundProps> = ({
 }) => {
   const { isDark } = useTheme();
   const shouldReduceMotion = useReducedMotion();
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-  // Mouse tracking for subtle interactive depth
+  // Pure motion values (no React re-renders on mousemove!)
+  const rawX = useMotionValue(0);
+  const rawY = useMotionValue(0);
+
+  // Mouse tracking with zero React state overhead, disabled on touch screens
   useEffect(() => {
     if (shouldReduceMotion) return;
+    const isTouch = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+    if (isTouch) return;
+
+    let rafId: number | null = null;
     const handleMouseMove = (e: MouseEvent) => {
-      const { innerWidth, innerHeight } = window;
-      setMousePos({
-        x: (e.clientX / innerWidth - 0.5) * 20,
-        y: (e.clientY / innerHeight - 0.5) * 20,
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        const { innerWidth, innerHeight } = window;
+        rawX.set((e.clientX / innerWidth - 0.5) * 16);
+        rawY.set((e.clientY / innerHeight - 0.5) * 16);
+        rafId = null;
       });
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [shouldReduceMotion]);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
+  }, [shouldReduceMotion, rawX, rawY]);
 
   // Spring smoothed mouse offset
-  const springX = useSpring(mousePos.x, { stiffness: 45, damping: 25 });
-  const springY = useSpring(mousePos.y, { stiffness: 45, damping: 25 });
+  const springX = useSpring(rawX, { stiffness: 45, damping: 25 });
+  const springY = useSpring(rawY, { stiffness: 45, damping: 25 });
 
   // Parallax with scroll
   const { scrollY } = useScroll();
-  const scrollYTransform = useTransform(scrollY, [0, 3000], [0, -180]);
-  const smoothScrollY = useSpring(scrollYTransform, { stiffness: 100, damping: 30 });
+  const scrollYTransform = useTransform(scrollY, [0, 3000], [0, -120]);
+  const smoothScrollY = useSpring(scrollYTransform, { stiffness: 80, damping: 28 });
 
   // Combined vertical translation (mouse drift + scroll parallax)
   const combinedY = useTransform(
@@ -48,13 +60,14 @@ export const ScrollMotionBackground: React.FC<ScrollMotionBackgroundProps> = ({
   return (
     <div
       aria-hidden="true"
-      className={`fixed inset-0 pointer-events-none z-0 overflow-hidden select-none transition-colors duration-500 ${
+      className={`fixed inset-0 pointer-events-none z-0 overflow-hidden select-none transition-colors duration-500 will-change-transform ${
         isDark ? 'bg-[#040814]' : 'bg-[#f4f7fb]'
       } ${className}`}
+      style={{ transform: 'translateZ(0)' }}
     >
       {/* 
         ═══════════════════════════════════════════════════════════
-        1. MAIN CIRCUIT BOARD IMAGE LAYER (Framer Motion Animated)
+        1. MAIN CIRCUIT BOARD IMAGE LAYER
         ═══════════════════════════════════════════════════════════
       */}
       <motion.div
@@ -62,177 +75,70 @@ export const ScrollMotionBackground: React.FC<ScrollMotionBackgroundProps> = ({
           x: shouldReduceMotion ? 0 : springX,
           y: shouldReduceMotion ? 0 : combinedY,
         }}
-        className="absolute -inset-[8%] w-[116%] h-[116%]"
+        className="absolute -inset-[5%] w-[110%] h-[110%] will-change-transform"
       >
-        <motion.div
-          animate={
-            shouldReduceMotion
-              ? undefined
-              : {
-                  scale: [1, 1.025, 1],
-                  rotate: [0, 0.4, 0, -0.4, 0],
-                }
-          }
-          transition={{
-            duration: 22,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="w-full h-full relative"
-        >
+        <div className="w-full h-full relative">
           <img
             src="/circuit-bg.jpg"
             alt=""
-            className={`w-full h-full object-cover object-center transition-all duration-700 ${
+            decoding="async"
+            className={`w-full h-full object-cover object-center transition-opacity duration-700 ${
               isDark
-                ? 'opacity-85 filter brightness-105 contrast-125'
-                : 'opacity-25 filter brightness-110 contrast-110 saturate-150 mix-blend-multiply'
+                ? 'opacity-80 brightness-105 contrast-125'
+                : 'opacity-25 brightness-110 contrast-110 saturate-150 mix-blend-multiply'
             }`}
             draggable={false}
           />
-        </motion.div>
+        </div>
       </motion.div>
 
       {/* 
         ═══════════════════════════════════════════════════════════
-        2. GLOWING ENERGY NODES (Positioned along circuit tracks)
+        2. GLOWING ENERGY NODES (GPU-friendly, desktop only for 60fps)
         ═══════════════════════════════════════════════════════════
       */}
       {enableInteractiveGlow && !shouldReduceMotion && (
-        <>
+        <div className="hidden sm:block absolute inset-0 pointer-events-none">
           {/* Cyan Node: Top Left Cluster */}
-          <motion.div
-            animate={{
-              scale: [1, 1.35, 1],
-              opacity: isDark ? [0.45, 0.9, 0.45] : [0.2, 0.5, 0.2],
-            }}
-            transition={{
-              duration: 4.2,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-            className="absolute top-[18%] left-[24%] w-32 h-32 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/25 blur-2xl pointer-events-none"
+          <div
+            className={`absolute top-[18%] left-[24%] w-28 h-28 -translate-x-1/2 -translate-y-1/2 rounded-full blur-xl pointer-events-none transition-opacity duration-700 ${
+              isDark ? 'bg-cyan-400/20 opacity-75' : 'bg-cyan-400/15 opacity-40'
+            }`}
           />
 
           {/* Cyan Node: Upper Center Track */}
-          <motion.div
-            animate={{
-              scale: [1.2, 1, 1.2],
-              opacity: isDark ? [0.5, 0.95, 0.5] : [0.25, 0.6, 0.25],
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: 1.2,
-            }}
-            className="absolute top-[28%] left-[34%] w-24 h-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/30 blur-xl pointer-events-none"
+          <div
+            className={`absolute top-[28%] left-[34%] w-20 h-20 -translate-x-1/2 -translate-y-1/2 rounded-full blur-lg pointer-events-none transition-opacity duration-700 ${
+              isDark ? 'bg-cyan-400/25 opacity-70' : 'bg-cyan-400/15 opacity-35'
+            }`}
           />
 
           {/* Electric Blue Node: Upper Right Track */}
-          <motion.div
-            animate={{
-              scale: [1, 1.4, 1],
-              opacity: isDark ? [0.4, 0.85, 0.4] : [0.15, 0.45, 0.15],
-            }}
-            transition={{
-              duration: 4.8,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: 0.8,
-            }}
-            className="absolute top-[20%] right-[30%] w-28 h-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/25 blur-2xl pointer-events-none"
-          />
-
-          {/* Cyan Node: Mid Right Connection */}
-          <motion.div
-            animate={{
-              scale: [1, 1.3, 1],
-              opacity: isDark ? [0.35, 0.8, 0.35] : [0.15, 0.4, 0.15],
-            }}
-            transition={{
-              duration: 3.8,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: 2.1,
-            }}
-            className="absolute top-[36%] right-[28%] w-20 h-20 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-300/30 blur-lg pointer-events-none"
+          <div
+            className={`absolute top-[20%] right-[30%] w-24 h-24 -translate-x-1/2 -translate-y-1/2 rounded-full blur-xl pointer-events-none transition-opacity duration-700 ${
+              isDark ? 'bg-blue-500/20 opacity-70' : 'bg-blue-500/10 opacity-30'
+            }`}
           />
 
           {/* Cyan Node: Bottom Left Bus */}
-          <motion.div
-            animate={{
-              scale: [1.1, 1.45, 1.1],
-              opacity: isDark ? [0.5, 0.9, 0.5] : [0.2, 0.5, 0.2],
-            }}
-            transition={{
-              duration: 4.5,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: 1.6,
-            }}
-            className="absolute bottom-[28%] left-[25%] w-36 h-36 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/25 blur-2xl pointer-events-none"
+          <div
+            className={`absolute bottom-[28%] left-[25%] w-32 h-32 -translate-x-1/2 -translate-y-1/2 rounded-full blur-xl pointer-events-none transition-opacity duration-700 ${
+              isDark ? 'bg-cyan-400/20 opacity-70' : 'bg-cyan-400/15 opacity-35'
+            }`}
           />
 
           {/* Bottom Center Node */}
-          <motion.div
-            animate={{
-              scale: [1, 1.3, 1],
-              opacity: isDark ? [0.4, 0.85, 0.4] : [0.15, 0.45, 0.15],
-            }}
-            transition={{
-              duration: 5.4,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: 2.7,
-            }}
-            className="absolute bottom-[21%] left-[48%] w-28 h-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-400/25 blur-xl pointer-events-none"
+          <div
+            className={`absolute bottom-[21%] left-[48%] w-24 h-24 -translate-x-1/2 -translate-y-1/2 rounded-full blur-lg pointer-events-none transition-opacity duration-700 ${
+              isDark ? 'bg-blue-400/20 opacity-60' : 'bg-blue-400/10 opacity-30'
+            }`}
           />
-
-          {/* Bottom Right Connection */}
-          <motion.div
-            animate={{
-              scale: [1.2, 1, 1.2],
-              opacity: isDark ? [0.45, 0.9, 0.45] : [0.2, 0.5, 0.2],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: 3.2,
-            }}
-            className="absolute bottom-[8%] right-[27%] w-28 h-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/30 blur-xl pointer-events-none"
-          />
-        </>
+        </div>
       )}
 
       {/* 
         ═══════════════════════════════════════════════════════════
-        3. CYBER SCANLINE / BEAM SWEEP
-        ═══════════════════════════════════════════════════════════
-      */}
-      {!shouldReduceMotion && (
-        <motion.div
-          animate={{
-            y: ['-10%', '115%'],
-          }}
-          transition={{
-            duration: 9,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
-          className="absolute left-0 right-0 h-40 pointer-events-none"
-          style={{
-            background: isDark
-              ? 'linear-gradient(to bottom, transparent, rgba(56, 189, 248, 0.07) 50%, transparent)'
-              : 'linear-gradient(to bottom, transparent, rgba(14, 165, 233, 0.04) 50%, transparent)',
-          }}
-        />
-      )}
-
-      {/* 
-        ═══════════════════════════════════════════════════════════
-        4. THEME-AWARE CONTRAST VEIL & VIGNETTE
+        3. THEME-AWARE CONTRAST VEIL & VIGNETTE (Zero backdrop-blur lag!)
         ═══════════════════════════════════════════════════════════
       */}
       {/* Dark mode: deep edge vignette to focus content */}
@@ -240,9 +146,9 @@ export const ScrollMotionBackground: React.FC<ScrollMotionBackgroundProps> = ({
         <div className="absolute inset-0 bg-radial from-transparent via-[#040814]/40 to-[#030611]/85 pointer-events-none" />
       )}
 
-      {/* Light mode: delicate glass veil so text is 100% crisp while cyber grid shines through */}
+      {/* Light mode: crisp translucent wash without expensive backdrop-filter */}
       {!isDark && (
-        <div className="absolute inset-0 bg-gradient-to-b from-white/75 via-white/60 to-white/80 backdrop-blur-[1px] pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/85 via-white/70 to-white/90 pointer-events-none" />
       )}
     </div>
   );

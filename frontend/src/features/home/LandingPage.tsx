@@ -102,8 +102,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       <div className="w-full bg-transparent flex flex-col space-y-12 sm:space-y-16 pb-0 sm:pb-2 max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-8 pt-3 sm:pt-6">
       
       {/* ── 1. HERO SECTION ── */}
-      <section className="w-full bg-white/85 dark:bg-zinc-900/60 backdrop-blur-xl rounded-3xl border border-zinc-200/80 dark:border-white/10 py-6 [@media(max-height:700px)]:py-4 px-4 sm:p-10 lg:p-12 shadow-sm dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative overflow-hidden transition-all text-center">
-        <div className="w-full max-w-4xl mx-auto flex flex-col items-center text-center space-y-5 [@media(max-height:700px)]:space-y-3 [@media(max-height:600px)]:space-y-2 sm:space-y-6">
+      <section className="w-full bg-white dark:bg-[#080d1a] rounded-3xl border border-zinc-200/80 dark:border-white/10 py-6 sm:p-10 lg:p-12 shadow-sm dark:shadow-[0_16px_40px_rgba(0,0,0,0.5)] relative overflow-hidden transition-all text-center">
+        <div className="w-full max-w-4xl mx-auto flex flex-col items-center text-center space-y-4 sm:space-y-6">
           
           <AnimatedBadge 
             icon={<Sparkles className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400 shrink-0" />} 
@@ -204,7 +204,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       {/* Removed Best Selling Promo and Trust Banner */}
 
       {/* ── 3. CATEGORY CATALOG ── */}
-      <section id="categories-section" className="scroll-mt-24 sm:scroll-mt-28 bg-white/85 dark:bg-zinc-900/60 dark:backdrop-blur-xl rounded-2xl p-5 sm:p-8 border border-zinc-200/90 dark:border-white/10 shadow-sm space-y-8 text-center transition-all">
+      <section id="categories-section" className="scroll-mt-24 sm:scroll-mt-28 bg-white dark:bg-[#080d1a] rounded-2xl p-5 sm:p-8 border border-zinc-200/90 dark:border-white/10 shadow-sm space-y-8 text-center transition-all">
         <div className="max-w-2xl mx-auto text-center space-y-2">
           <p className="text-xs font-bold font-mono tracking-widest text-zinc-500 dark:text-cyan-400 uppercase">
             EXPLORE CATEGORIES
@@ -305,7 +305,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </div>
 
         <div className="mt-8">
-          <div className="rounded-2xl p-6 sm:p-8 border border-cyan-200 dark:border-cyan-500/30 bg-cyan-50/70 dark:bg-cyan-950/30 dark:backdrop-blur-md flex flex-col sm:flex-row items-center justify-between text-center sm:text-left gap-6 shadow-xs">
+          <div className="rounded-2xl p-5 sm:p-8 border border-cyan-200 dark:border-cyan-500/30 bg-cyan-50/80 dark:bg-cyan-950/40 flex flex-col sm:flex-row items-center justify-between text-center sm:text-left gap-5 sm:gap-6 shadow-xs">
             <div className="space-y-2 max-w-lg mx-auto sm:mx-0">
               <AnimatedHeading 
                 as="h3" 
@@ -329,7 +329,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* ── 4. FEATURED PROJECTS SHOWCASE ── */}
-      <section className="bg-white/85 dark:bg-zinc-900/60 dark:backdrop-blur-xl rounded-2xl p-5 sm:p-8 border border-zinc-200/90 dark:border-white/10 shadow-sm space-y-8 text-center transition-all">
+      <section className="bg-white dark:bg-[#080d1a] rounded-2xl p-5 sm:p-8 border border-zinc-200/90 dark:border-white/10 shadow-sm space-y-8 text-center transition-all">
         <div className="max-w-2xl mx-auto text-center space-y-2">
           <p className="text-xs font-bold font-mono tracking-widest text-zinc-500 dark:text-cyan-400 uppercase">
             STUDENT FAVORITES
@@ -360,7 +360,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* ── 5. GET OUR INSTANT SERVICES ── */}
-      <section id="services-tiers-section" className="scroll-mt-24 sm:scroll-mt-28 bg-white/85 dark:bg-zinc-900/60 dark:backdrop-blur-xl rounded-2xl p-5 sm:p-8 border border-zinc-200/90 dark:border-white/10 shadow-sm space-y-8 text-center transition-all">
+      <section id="services-tiers-section" className="scroll-mt-24 sm:scroll-mt-28 bg-white dark:bg-[#080d1a] rounded-2xl p-5 sm:p-8 border border-zinc-200/90 dark:border-white/10 shadow-sm space-y-8 text-center transition-all">
         <div className="max-w-2xl mx-auto text-center space-y-2">
           <p className="text-xs font-bold font-mono tracking-widest text-zinc-500 dark:text-cyan-400 uppercase">
             ACADEMIC SERVICES
@@ -515,7 +515,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* ── 6. HOW IT WORKS ── */}
-      <section id="protocol-section" className="scroll-mt-24 sm:scroll-mt-28 bg-white/85 dark:bg-zinc-900/60 dark:backdrop-blur-xl rounded-2xl p-5 sm:p-8 border border-zinc-200/90 dark:border-white/10 shadow-sm space-y-8 text-center transition-all">
+      <section id="protocol-section" className="scroll-mt-24 sm:scroll-mt-28 bg-white dark:bg-[#080d1a] rounded-2xl p-5 sm:p-8 border border-zinc-200/90 dark:border-white/10 shadow-sm space-y-8 text-center transition-all">
         <div className="max-w-3xl mx-auto text-center flex flex-col items-center space-y-3">
           <AnimatedHeading 
             text="How It Works" 
@@ -558,7 +558,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
 
       {/* ── 8. BOTTOM CALL TO ACTION BANNER ── */}
-      <section className="bg-zinc-900/90 dark:bg-zinc-950/45 dark:backdrop-blur-2xl text-white rounded-3xl p-6 sm:p-12 text-center space-y-6 shadow-2xl relative overflow-hidden border border-zinc-800 dark:border-white/15 transition-all">
+      <section className="bg-zinc-900 dark:bg-[#070b16] text-white rounded-3xl p-6 sm:p-12 text-center space-y-6 shadow-xl relative overflow-hidden border border-zinc-800 dark:border-white/15 transition-all">
         <div className="max-w-2xl mx-auto space-y-3">
           <div className="inline-block">
             <AnimatedShimmerText>

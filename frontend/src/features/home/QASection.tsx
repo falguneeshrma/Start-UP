@@ -159,7 +159,7 @@ export const QASection: React.FC<QASectionProps> = ({ onOpenSupport, onNavigate:
     <section 
       id="qa-section" 
       aria-label="Frequently Asked Questions and Answers"
-      className="w-full bg-white/85 dark:bg-zinc-900/60 dark:backdrop-blur-xl rounded-3xl border border-zinc-200/90 dark:border-white/10 p-5 sm:p-10 lg:p-12 shadow-sm dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative overflow-hidden transition-all text-left"
+      className="w-full bg-white dark:bg-[#080d1a] rounded-3xl border border-zinc-200/90 dark:border-white/10 p-5 sm:p-10 lg:p-12 shadow-sm dark:shadow-[0_16px_40px_rgba(0,0,0,0.5)] relative overflow-hidden transition-all text-left"
     >
       <div className="relative z-10 max-w-5xl mx-auto space-y-8 sm:space-y-10">
         

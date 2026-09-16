@@ -119,13 +119,13 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <>
-      <header className="sticky top-0 z-40 border-b border-zinc-200/80 dark:border-white/10 backdrop-blur-xl transition-all duration-300 shadow-2xs bg-white/95 dark:bg-zinc-950/90">
-        <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-1.5 sm:gap-4">
+      <header className="sticky top-0 z-40 border-b border-zinc-200/80 dark:border-white/10 backdrop-blur-md transition-colors duration-300 shadow-2xs bg-white/95 dark:bg-zinc-950/90 will-change-transform" style={{ transform: 'translateZ(0)' }}>
+        <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-1 sm:gap-4">
           {/* Brand Logo & Name */}
-          <div className="flex items-center shrink-0">
+          <div className="flex items-center shrink-0 min-w-0">
             <button 
               onClick={() => onTabChange(isAuthenticated ? 'dashboard' : 'home')}
-              className="flex items-center gap-2 sm:gap-2.5 text-left group cursor-pointer"
+              className="flex items-center gap-1.5 sm:gap-2.5 text-left group cursor-pointer max-w-full"
             >
               <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 flex items-center justify-center font-extrabold text-sm sm:text-base shadow-sm group-hover:scale-105 transition-all duration-300">
                 P
@@ -263,7 +263,7 @@ export const Header: React.FC<HeaderProps> = ({
           </nav>
 
           {/* Right action items */}
-          <div className="flex items-center gap-1 sm:gap-2 lg:gap-3 shrink-0">
+          <div className="flex items-center gap-1 sm:gap-1.5 lg:gap-2.5 shrink-0 justify-end">
             {/* Desktop Search with Guaranteed No Overlap */}
             <div className="relative hidden md:block group">
               <Search className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-400 group-focus-within:text-zinc-900 dark:group-focus-within:text-zinc-100 absolute left-3 top-1/2 -translate-y-1/2 transition-colors pointer-events-none z-10" />

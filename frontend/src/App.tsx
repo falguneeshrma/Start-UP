@@ -316,15 +316,18 @@ export const AppContent: React.FC = () => {
         </div>
       </footer>
 
-      {/* Bottom Navigation Bar (Mobile / App View Only with glassmorphism & centrally aligned items) */}
-      <nav className="fixed bottom-0 left-0 right-0 w-full flex justify-around items-center px-1.5 sm:px-2 pt-1 pb-1.5 safe-area-bottom md:hidden bg-white/95 dark:bg-zinc-950/90 dark:backdrop-blur-2xl shadow-[0_-4px_24px_rgba(0,0,0,0.08)] z-40 border-t border-zinc-200 dark:border-white/10 transition-colors">
+      {/* Bottom Navigation Bar (Mobile View: High performance, fluid width across small screens) */}
+      <nav 
+        className="fixed bottom-0 left-0 right-0 w-full flex justify-around items-center px-1 sm:px-2 pt-1 pb-1.5 safe-area-bottom md:hidden bg-white dark:bg-[#080d1a] shadow-[0_-4px_20px_rgba(0,0,0,0.06)] dark:shadow-[0_-4px_24px_rgba(0,0,0,0.4)] z-40 border-t border-zinc-200 dark:border-white/10 transition-colors will-change-transform"
+        style={{ transform: 'translateZ(0)' }}
+      >
         {/* Home Tab */}
         <button
           type="button"
           onClick={() => handleTabChange('home')}
-          className={`flex flex-col items-center justify-center flex-1 min-w-0 max-w-[80px] min-h-[44px] py-1 px-0.5 sm:px-1 rounded-xl transition-all cursor-pointer ${
+          className={`flex flex-col items-center justify-center flex-1 min-w-0 min-h-[44px] py-1 px-0.5 rounded-xl transition-all cursor-pointer ${
             activeTab === 'home'
-              ? 'text-zinc-900 dark:text-white font-bold bg-zinc-100 dark:bg-zinc-800 shadow-xs'
+              ? 'text-zinc-900 dark:text-white font-bold bg-zinc-100 dark:bg-zinc-800/90 shadow-xs'
               : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
           }`}
         >
@@ -336,9 +339,9 @@ export const AppContent: React.FC = () => {
         <button
           type="button"
           onClick={() => handleTabChange('browse')}
-          className={`flex flex-col items-center justify-center flex-1 min-w-0 max-w-[80px] min-h-[44px] py-1 px-0.5 sm:px-1 rounded-xl transition-all cursor-pointer ${
+          className={`flex flex-col items-center justify-center flex-1 min-w-0 min-h-[44px] py-1 px-0.5 rounded-xl transition-all cursor-pointer ${
             activeTab === 'browse'
-              ? 'text-zinc-900 dark:text-white font-bold bg-zinc-100 dark:bg-zinc-800 shadow-xs'
+              ? 'text-zinc-900 dark:text-white font-bold bg-zinc-100 dark:bg-zinc-800/90 shadow-xs'
               : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
           }`}
         >
@@ -352,9 +355,9 @@ export const AppContent: React.FC = () => {
             <button
               type="button"
               onClick={() => handleTabChange('dashboard')}
-              className={`flex flex-col items-center justify-center flex-1 min-w-0 max-w-[80px] min-h-[44px] py-1 px-0.5 sm:px-1 rounded-xl transition-all cursor-pointer ${
+              className={`flex flex-col items-center justify-center flex-1 min-w-0 min-h-[44px] py-1 px-0.5 rounded-xl transition-all cursor-pointer ${
                 activeTab === 'dashboard'
-                  ? 'text-zinc-900 dark:text-white font-bold bg-zinc-100 dark:bg-zinc-800 shadow-xs'
+                  ? 'text-zinc-900 dark:text-white font-bold bg-zinc-100 dark:bg-zinc-800/90 shadow-xs'
                   : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
               }`}
             >
@@ -365,9 +368,9 @@ export const AppContent: React.FC = () => {
             <button
               type="button"
               onClick={() => handleTabChange('submit')}
-              className={`flex flex-col items-center justify-center flex-1 min-w-0 max-w-[80px] min-h-[44px] py-1 px-0.5 sm:px-1 rounded-xl transition-all cursor-pointer ${
+              className={`flex flex-col items-center justify-center flex-1 min-w-0 min-h-[44px] py-1 px-0.5 rounded-xl transition-all cursor-pointer ${
                 activeTab === 'submit'
-                  ? 'text-zinc-900 dark:text-white font-bold bg-zinc-100 dark:bg-zinc-800 shadow-xs'
+                  ? 'text-zinc-900 dark:text-white font-bold bg-zinc-100 dark:bg-zinc-800/90 shadow-xs'
                   : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
               }`}
             >
@@ -378,9 +381,9 @@ export const AppContent: React.FC = () => {
             <button
               type="button"
               onClick={() => handleTabChange('admin')}
-              className={`flex flex-col items-center justify-center flex-1 min-w-0 max-w-[80px] min-h-[44px] py-1 px-0.5 sm:px-1 rounded-xl transition-all relative cursor-pointer ${
+              className={`flex flex-col items-center justify-center flex-1 min-w-0 min-h-[44px] py-1 px-0.5 rounded-xl transition-all relative cursor-pointer ${
                 activeTab === 'admin'
-                  ? 'text-zinc-900 dark:text-white font-bold bg-zinc-100 dark:bg-zinc-800 shadow-xs'
+                  ? 'text-zinc-900 dark:text-white font-bold bg-zinc-100 dark:bg-zinc-800/90 shadow-xs'
                   : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
               }`}
             >
@@ -401,7 +404,7 @@ export const AppContent: React.FC = () => {
                 if (activeTab !== 'home') handleTabChange('home');
                 setTimeout(() => document.getElementById('categories-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
               }}
-              className="flex flex-col items-center justify-center flex-1 min-w-0 max-w-[80px] min-h-[44px] py-1 px-0.5 sm:px-1 rounded-xl transition-all text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 cursor-pointer"
+              className="flex flex-col items-center justify-center flex-1 min-w-0 min-h-[44px] py-1 px-0.5 rounded-xl transition-all text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 cursor-pointer"
             >
               <Layers className="w-4 h-4 sm:w-5 sm:h-5 mb-0.5 shrink-0" />
               <span className="text-[9px] sm:text-[10px] font-semibold tracking-tight truncate max-w-full">Categories</span>
@@ -413,16 +416,16 @@ export const AppContent: React.FC = () => {
                 if (activeTab !== 'home') handleTabChange('home');
                 setTimeout(() => document.getElementById('services-tiers-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
               }}
-              className="flex flex-col items-center justify-center flex-1 min-w-0 max-w-[80px] min-h-[44px] py-1 px-0.5 sm:px-1 rounded-xl transition-all text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 cursor-pointer"
+              className="flex flex-col items-center justify-center flex-1 min-w-0 min-h-[44px] py-1 px-0.5 rounded-xl transition-all text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 cursor-pointer"
             >
-              <Zap className="w-4 h-4 sm:w-5 sm:h-5 mb-0.5 shrink-0" />
+              <Zap className="w-4 h-4 sm:w-5 sm:h-5 mb-0.5 shrink-0 text-amber-500" />
               <span className="text-[9px] sm:text-[10px] font-semibold tracking-tight truncate max-w-full">Services</span>
             </button>
 
             <button
               type="button"
               onClick={() => openAuthModal({ message: 'Sign in to access your student project dashboard.' })}
-              className="flex flex-col items-center justify-center flex-1 min-w-0 max-w-[80px] min-h-[44px] py-1 px-0.5 sm:px-1 rounded-xl transition-all text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 cursor-pointer"
+              className="flex flex-col items-center justify-center flex-1 min-w-0 min-h-[44px] py-1 px-0.5 rounded-xl transition-all text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 cursor-pointer"
             >
               <LogIn className="w-4 h-4 sm:w-5 sm:h-5 mb-0.5 shrink-0" />
               <span className="text-[9px] sm:text-[10px] font-semibold tracking-tight truncate max-w-full">Sign In</span>

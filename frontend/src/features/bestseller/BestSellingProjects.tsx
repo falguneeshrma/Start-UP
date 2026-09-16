@@ -47,7 +47,7 @@ export const BestSellingProjects: React.FC<BestSellingProjectsProps> = ({
         </div>
 
         {/* Blank / Clean Empty State Card (Zero Dummy Code) */}
-        <div className="bg-white/50 dark:bg-zinc-950/25 dark:backdrop-blur-2xl rounded-3xl p-8 sm:p-14 border border-white/60 dark:border-white/10 shadow-xl dark:shadow-2xl space-y-6 text-center transition-all">
+        <div className="bg-white/50 dark:bg-[#080d1a] rounded-3xl p-8 sm:p-14 border border-white/60 dark:border-white/10 shadow-xl dark:shadow-2xl space-y-6 text-center transition-all">
           <div className="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-white/10 text-amber-500 dark:text-amber-400 flex items-center justify-center mx-auto shadow-inner border border-slate-200/60 dark:border-white/10">
             <Award className="w-8 h-8" />
           </div>
@@ -83,7 +83,7 @@ export const BestSellingProjects: React.FC<BestSellingProjectsProps> = ({
 
             <button
               onClick={() => onNavigate('submit')}
-              className="w-full sm:w-auto justify-center px-6 py-3 rounded-xl font-bold text-xs sm:text-sm text-slate-800 dark:text-white bg-white/70 hover:bg-white/90 dark:bg-white/10 dark:hover:bg-white/15 border border-slate-300/80 dark:border-white/20 backdrop-blur-sm transition-all hover:scale-[1.02] active:scale-95 flex items-center gap-2 cursor-pointer shadow-xs"
+              className="w-full sm:w-auto justify-center px-6 py-3 rounded-xl font-bold text-xs sm:text-sm text-slate-800 dark:text-white bg-white/70 hover:bg-white/90 dark:bg-white/10 dark:hover:bg-white/15 border border-slate-300/80 dark:border-white/20  transition-all hover:scale-[1.02] active:scale-95 flex items-center gap-2 cursor-pointer shadow-xs"
             >
               <FileText className="w-4 h-4 text-slate-600 dark:text-zinc-300" />
               <span>Submit Custom Requirement</span>
